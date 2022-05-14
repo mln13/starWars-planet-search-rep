@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 // import apiRequest from '../services/Api';
 
@@ -25,8 +25,8 @@ function Provider({ children }) {
   );
 }
 
-// Provider.propTypes = {
-//   children: PropTypes.elementType.isRequired,
-// };
+Provider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default Provider;
