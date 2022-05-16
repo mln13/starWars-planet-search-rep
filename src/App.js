@@ -8,7 +8,6 @@ function App() {
   // const { } = useContext(AppContext);
   return (
     <Provider>
-      <span>Hello, App!</span>
       <Table />
     </Provider>
   );

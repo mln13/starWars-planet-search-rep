@@ -1,21 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
-// import apiRequest from '../services/Api';
 
 function Provider({ children }) {
-  const [stateA, setStateA] = useState('initial');
-  // useEffect(() => {
-  //   const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
-  //   apiRequest(url)
-  //     .then((e) => {
-  //       // stateA(e);
-  //       console.log(setStateA(e));
-  //     });
-  // }, []);
+  const [planets, setPlanets] = useState([]);
+  const [returnPlanets, setReturnPlanets] = useState(planets);
+  const [input, setInput] = useState('');
+  const [filterList, setFilterList] = useState([]);
+  const [numericValues, setNumericValues] = useState({
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '0',
+      },
+    ],
+  });
+
+  useEffect(() => {
+    const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+    const obj = async () => {
+      const { results } = await fetch(endpoint).then((response) => response.json());
+      setPlanets(results);
+      setReturnPlanets(results);
+    };
+    obj();
+  }, [setPlanets]);
+
   const contextValue = {
-    stateA,
-    setStateA,
+    filterList,
+    setFilterList,
+    returnPlanets,
+    setReturnPlanets,
+    numericValues,
+    setNumericValues,
+    planets,
+    setPlanets,
+    input,
+    setInput,
   };
 
   return (
