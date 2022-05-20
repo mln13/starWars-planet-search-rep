@@ -98,19 +98,19 @@ function Planets() {
       case 'maior que': {
         setPlanets(planets
           .filter((element) => (Number(element[columnFilter]) > Number(valueFilter))
-            && (element.population !== 'unknown')));
+            && (element[columnFilter] !== 'unknown')));
         break;
       }
       case 'menor que': {
         setPlanets(planets
           .filter((element) => (Number(element[columnFilter]) < Number(valueFilter))
-              && (element.population !== 'unknown')));
+              && (element[columnFilter] !== 'unknown')));
         break;
       }
       case 'igual a': {
         setPlanets(planets
           .filter((element) => (element[columnFilter] === valueFilter)
-              && (element.population !== 'unknown')));
+              && (element[columnFilter] !== 'unknown')));
         break;
       }
       default: console.log('no filters');
