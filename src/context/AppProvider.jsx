@@ -4,9 +4,8 @@ import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
-  const [returnPlanets, setReturnPlanets] = useState(planets);
+  const [returnPlanets, setReturnPlanets] = useState([]);
   const [input, setInput] = useState('');
-  const [filterList, setFilterList] = useState([]);
   const [numericValues, setNumericValues] = useState({
     filterByNumericValues: [
       {
@@ -16,6 +15,7 @@ function Provider({ children }) {
       },
     ],
   });
+  const [filters, setFilters] = useState([]);
 
   useEffect(() => {
     const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -28,8 +28,8 @@ function Provider({ children }) {
   }, [setPlanets]);
 
   const contextValue = {
-    filterList,
-    setFilterList,
+    filters,
+    setFilters,
     returnPlanets,
     setReturnPlanets,
     numericValues,

@@ -1,18 +1,38 @@
-// import React, { useContext } from "react";
-// import Table from "./Table";
+// import { useContext } from 'react';
+// import AppContext from '../context/AppContext';
 
-// function Filter () {
-//     const {
-//     filterList,
-//     setFilterList,
-//     } = useContext;
-//     return (
-//         <div>
-//             {filterList.map((e) => {
-
-//             })}
-//         </div>
-//     )
+// function Filter() {
+//   const {
+//     planets,
+//     filters,
+//     setPlanets,
+//   } = useContext(AppContext);
+//   return (
+//     filters.map(({ comparinsonFilter, valueFilter }) => {
+//       switch (comparinsonFilter) {
+//       case 'maior que': {
+//         setPlanets(planets
+//           .filter((element) => (Number(element.population) > Number(valueFilter))
+//           && (element.population !== 'unknown')));
+//         break;
+//       }
+//       case 'menor que': {
+//         setPlanets(planets
+//           .filter((element) => (element.population < valueFilter)
+//             && (element.population !== 'unknown')));
+//         break;
+//       }
+//       case 'igual a': {
+//         setPlanets(planets
+//           .filter((element) => (element.population === valueFilter)
+//             && (element.population !== 'unknown')));
+//         break;
+//       }
+//       default: console.log('no filters');
+//       }
+//       return console.log('filtered');
+//     })
+//   );
 // }
 
-// import default Filter;
+// export default Filter;
