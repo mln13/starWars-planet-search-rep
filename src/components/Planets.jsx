@@ -5,15 +5,18 @@ import Table from './Table';
 
 function Planets() {
   const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const selecOp = ['maior que', 'menor que', 'igual a'];
   const {
+    arrayOption,
+    setArrayOption,
     planets,
     filters,
     setFilters,
     numericValues,
     setNumericValues,
     setPlanets,
-    // setReturnPlanets,
-    // returnPlanets,
+    setReturnPlanets,
+    returnPlanets,
     input,
     setInput,
   } = useContext(AppContext);
@@ -22,14 +25,17 @@ function Planets() {
     const obj = async () => {
       const { results } = await fetch(endpoint).then((response) => response.json());
       setPlanets(results);
+      setReturnPlanets(results);
     };
-    // setReturnPlanets(planets);
     obj();
-  }, [setPlanets]);
+  }, []);
   const handleChange = ({ target }) => {
     setInput(target.value);
   };
-
+  const removeAll = () => {
+    setPlanets(returnPlanets);
+    setFilters([]);
+  };
   const handleFilter = ({ target }) => {
     switch (target.id) {
     case 'selectColumn':
@@ -79,21 +85,17 @@ function Planets() {
         valueFilter: filterByNumericValues[0].value,
       }];
     setFilters(newFilters);
+    console.log(planets);
     return newFilters.map(({ columnFilter, comparinsonFilter, valueFilter }) => {
-      const selecCol = document.getElementById('selectColumn');
-      const selecOp = document.getElementById('selectOperator');
-      for (let i = 0; i < selecCol.length; i += 1) {
-        if (selecCol.options[i].value === columnFilter) {
-          selecCol.options.remove(i);
-          setNumericValues({
-            filterByNumericValues: [{
-              column: selecCol.options[0].value,
-              comparison: selecOp.options[0].value,
-              value: '0',
-            }],
-          });
-        }
-      }
+      const newArrayOption = arrayOption.filter((e) => e !== columnFilter);
+      setArrayOption(newArrayOption);
+      setNumericValues({
+        filterByNumericValues: [{
+          column: newArrayOption[0],
+          comparison: selecOp[0],
+          value: '0',
+        }],
+      });
       switch (comparinsonFilter) {
       case 'maior que': {
         setPlanets(planets
@@ -110,7 +112,7 @@ function Planets() {
       case 'igual a': {
         setPlanets(planets
           .filter((element) => (element[columnFilter] === valueFilter)
-              && (element[columnFilter] !== 'unknown')));
+          && (element[columnFilter] !== 'unknown')));
         break;
       }
       default: console.log('no filters');
@@ -139,11 +141,9 @@ function Planets() {
             data-testid="column-filter"
             onChange={ handleFilter }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {arrayOption.map((e) => (
+              <option key={ e } value={ e }>{e}</option>
+            ))}
           </select>
         </label>
 
@@ -154,9 +154,9 @@ function Planets() {
             data-testid="comparison-filter"
             onChange={ handleFilter }
           >
-            <option value="maior que">maior que</option>
-            <option value="menor que">menor que</option>
-            <option value="igual a">igual a</option>
+            {selecOp.map((e) => (
+              <option key={ e } value={ e }>{e}</option>
+            ))}
           </select>
         </label>
 
@@ -180,8 +180,10 @@ function Planets() {
         </button>
         <button
           type="button"
+          data-testid="button-remove-filters"
+          onClick={ removeAll }
         >
-          Remove all filters
+          Remover todas filtragens
         </button>
       </section>
       <FilterList />

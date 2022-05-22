@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
@@ -6,6 +6,8 @@ function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [returnPlanets, setReturnPlanets] = useState([]);
   const [input, setInput] = useState('');
+  const [arrayOption, setArrayOption] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
   const [numericValues, setNumericValues] = useState({
     filterByNumericValues: [
       {
@@ -17,17 +19,19 @@ function Provider({ children }) {
   });
   const [filters, setFilters] = useState([]);
 
-  useEffect(() => {
-    const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
-    const obj = async () => {
-      const { results } = await fetch(endpoint).then((response) => response.json());
-      setPlanets(results);
-      setReturnPlanets(results);
-    };
-    obj();
-  }, [setPlanets]);
+  // useEffect(() => {
+  //   const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  //   const obj = async () => {
+  //     const { results } = await fetch(endpoint).then((response) => response.json());
+  //     setPlanets(results);
+  //     setReturnPlanets(results);
+  //   };
+  //   obj();
+  // }, [setPlanets]);
 
   const contextValue = {
+    arrayOption,
+    setArrayOption,
     filters,
     setFilters,
     returnPlanets,
