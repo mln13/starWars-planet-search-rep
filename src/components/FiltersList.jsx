@@ -52,18 +52,20 @@ function FilterList() {
     setFilters(remove);
     const newCount = count + 1;
     setCount(newCount);
+    const fil = document.getElementById('filter');
+    console.log(fil);
   };
 
   return (
     <ul>
       {filters.map((e, index) => (
-        <li key={ index }>
-          {e.columnFilter }
-          {e.comparinsonFilter }
-          {e.valueFilter}
+        <li
+          key={ index }
+          data-testid="filter"
+        >
+          {`${e.columnFilter}${e.comparinsonFilter} ${e.valueFilter}`}
           <button
             type="button"
-            data-testid="filter"
             onClick={ () => handleRemoveFilter(index) }
           >
             X
