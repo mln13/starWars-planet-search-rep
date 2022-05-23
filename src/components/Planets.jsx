@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 import FilterList from './FiltersList';
 import Table from './Table';
+import Sorting from './Sorting';
 
 function Planets() {
-  const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const selecOp = ['maior que', 'menor que', 'igual a'];
+
   const {
     arrayOption,
     setArrayOption,
@@ -15,20 +16,11 @@ function Planets() {
     numericValues,
     setNumericValues,
     setPlanets,
-    setReturnPlanets,
     returnPlanets,
     input,
     setInput,
   } = useContext(AppContext);
 
-  useEffect(() => {
-    const obj = async () => {
-      const { results } = await fetch(endpoint).then((response) => response.json());
-      setPlanets(results);
-      setReturnPlanets(results);
-    };
-    obj();
-  }, []);
   const handleChange = ({ target }) => {
     setInput(target.value);
   };
@@ -178,6 +170,7 @@ function Planets() {
         >
           Filter
         </button>
+        <Sorting />
         <button
           type="button"
           data-testid="button-remove-filters"
